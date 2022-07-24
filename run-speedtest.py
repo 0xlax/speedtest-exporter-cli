@@ -23,6 +23,8 @@ def process_request(t):
 	results_dict = s.results.dict()
 	g_download.set(results_dict["download"])
 	g_upload.set(results_dict["upload"])
+	print results_dict["upload"]
+  	print results_dict["download"]
 	time.sleep(t)
 
 
