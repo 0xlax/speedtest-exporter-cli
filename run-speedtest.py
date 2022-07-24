@@ -5,6 +5,9 @@ from prometheus_client import start_http_server, Summary, Gauge
 # Specify server to be tested against or it is set at default
 servers = []
 
+test_interval = 60
+
+
 s = speedtest.Speedtest()
 
 
@@ -23,8 +26,9 @@ def process_request(t):
 	results_dict = s.results.dict()
 	g_download.set(results_dict["download"])
 	g_upload.set(results_dict["upload"])
-	print results_dict["upload"]
-  	print results_dict["download"]
+    print("upload: %s" % (results_dict["upload"]))
+	print("download: %s" % (results_dict["download"]))
+
 	time.sleep(t)
 
 
@@ -33,4 +37,11 @@ if __name__ == '__main__':
 	start_http_server(9104)
 
 	while true:
-		process_request(60)
+		try:
+	    	process_request(test_interval)
+    	except TypeError:
+      		print("TypeError returned from speedtest server")
+    	except socket.timeout:
+      		print("socket.timeout returned from speedtest server")
+
+
