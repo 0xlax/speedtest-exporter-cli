@@ -1,7 +1,8 @@
 import socket
 import speedtest
 import time
-from prometheus_client import start_http_server, Summary, Gauge
+from prometheus_client import start_http_server, Gauge
+
 
 # Specify server to be tested against or it is set at default
 servers = []
@@ -20,6 +21,7 @@ g_download = Gauge('download_speed', 'Download Speed')
 g_upload = Gauge('upload_speed', 'Upload speed')
 
 def process_request(t):
+	"""Measure up- and download speed using speedtest."""
 	s.get_servers(servers)
     s.get_best_server()
     s.download()
