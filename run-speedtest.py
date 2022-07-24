@@ -15,7 +15,7 @@ s = speedtest.Speedtest()
 g_download = Gauge('download_speed', 'Download Speed')
 g_upload = Gauge('upload_speed', 'Upload speed')
 
-def process_request(t): {
+def process_request(t):
 	s.get_servers(servers)
 	s.get_best_server()
 	s.download()
@@ -24,6 +24,11 @@ def process_request(t): {
 	g_download.set(results_dict["download"])
 	g_upload.set(results_dict["upload"])
 	time.sleep(t)
-}
 
 
+if __name__ == '__main__':
+
+	start_http_server(9104)
+
+	while true:
+		process_request(60)
